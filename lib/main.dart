@@ -1,51 +1,78 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show AppBar, BuildContext, Colors, FloatingActionButton, Icons, LinearProgressIndicator, MaterialApp, Scaffold, StatelessWidget, Text, TextStyle, Widget, runApp;
 
-void main() => runApp(MyApp());
+import 'package:flutter/material.dart';
 
-class MyApp extends StatefulWidget {
-  // createState method
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(),
+    );
   }
 }
-class _MyFirstAppState extends State<MyApp>{
-  bool _loading = false;
-  late double _progressValue;
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  void initState() {
-    _loading = false;
-    _progressValue =0.0;
-    super.initState();
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _count = 0;
+
+  void _increase() {
+    setState(() {
+      _count += 1;
+    });
+  }
+
+  void _decrease() {
+    setState(() {
+      _count -= 1;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("My App", style: TextStyle(color: Colors.black),),centerTitle: true,
-          backgroundColor: Colors.blue,
-        ),
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget> [
-                LinearProgressIndicator(value:23),
-                Text('23 %', style: TextStyle(color: Colors.purple, fontSize: 40),),
-                Text("press the Button", style: TextStyle(color: Colors.pink, fontSize: 35),)
-              ],
+    return Scaffold(
+      
+      appBar: AppBar(
+        title: const Text("Counter"),
+        centerTitle: true,
+        backgroundColor: Colors.cyan,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Count:",
+              style: TextStyle(fontSize: 32),
             ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: null,
-          child: Icon(Icons.confirmation_num_sharp),
+            Text(
+              "$_count",
+              style: const TextStyle(fontSize: 32),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  onPressed: _increase,
+                  child: Icon(Icons.add),
+                ),
+                FloatingActionButton(
+                  onPressed: _decrease,
+                  child: Icon(Icons.remove), 
+                ),
+
+              ],
+            )
+          ],
         ),
       ),
     );
